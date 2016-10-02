@@ -8,11 +8,11 @@
     tools:context="lander.expandable.DetailActivity"
     tools:showIn="@layout/activity_detail">
 
-    <TextView
-        android:id="@+id/content_text"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:text="no text" />
+        />
 
 </android.support.v4.widget.NestedScrollView>

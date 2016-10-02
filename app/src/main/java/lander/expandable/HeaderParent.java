@@ -2,6 +2,7 @@ package lander.expandable;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
+import java.security.Key;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ public class HeaderParent implements ParentObject {
 
     private UUID mId;
     private String mTitle;
+    private String key;
     private List<Object> mChildItemList;
 
     public HeaderParent() {
@@ -43,5 +45,13 @@ public class HeaderParent implements ParentObject {
     @Override
     public void setChildObjectList(List<Object> list) {
         mChildItemList = list;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
