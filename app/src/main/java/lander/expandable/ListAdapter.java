@@ -21,11 +21,12 @@ import java.util.List;
 public class ListAdapter extends ExpandableRecyclerAdapter<ListAdapter.HeaderViewHolder, ListAdapter.BodyViewHolder> {
 
     private LayoutInflater mInflater;
-
+    private Intent intent;
 
     public ListAdapter(Context context, List<ParentObject> parentItemList) {
         super(context, parentItemList);
         mInflater = LayoutInflater.from(context);
+        intent = new Intent(context,DetailActivity.class);
     }
 
 
@@ -45,12 +46,22 @@ public class ListAdapter extends ExpandableRecyclerAdapter<ListAdapter.HeaderVie
     public void onBindParentViewHolder(HeaderViewHolder headerViewHolder, int i, Object o) {
         HeaderParent parent = (HeaderParent) o;
         headerViewHolder.titulo.setText(parent.getTitle());
+        intent.putExtra("title",parent.getTitle());
     }
 
     @Override
     public void onBindChildViewHolder(BodyViewHolder bodyViewHolder, int i, Object o) {
         BodyContent child = (BodyContent) o;
-        bodyViewHolder.content.setText(child.getContent());
+        String content = child.getContent();
+        intent.putExtra("content",content);
+        String resume = content.substring(0,256)+"...";
+        bodyViewHolder.content.setText(resume);
+        bodyViewHolder.lerMais.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     public static class HeaderViewHolder extends ParentViewHolder{
@@ -67,13 +78,6 @@ public class ListAdapter extends ExpandableRecyclerAdapter<ListAdapter.HeaderVie
             super(itemView);
             content = (TextView) itemView.findViewById(R.id.corpo);
             lerMais = (Button) itemView.findViewById(R.id.lerMais);
-
-            lerMais.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(),DetailActivity.class));
-                }
-            });
         }
     }
 }
