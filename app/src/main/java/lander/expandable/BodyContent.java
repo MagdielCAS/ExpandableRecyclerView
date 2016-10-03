@@ -5,9 +5,13 @@ package lander.expandable;
  */
 public class BodyContent {
     private String content;
+    private String key;
 
-    public BodyContent(String content) {
+    public BodyContent(){}
+
+    public BodyContent(String content,String key) {
         this.content = content;
+        this.key = key;
     }
 
     public String getContent() {
@@ -16,5 +20,13 @@ public class BodyContent {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

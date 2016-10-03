@@ -98,9 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     chapter = number + chapter;
                     HeaderParent parent = new HeaderParent(chapter);
-                    parent.setKey(contentKey);
                     List<Object> child = new ArrayList<>();
-                    child.add(new BodyContent(description));
+                    child.add(new BodyContent(description,contentKey));
                     parent.setChildObjectList(child);
                     chapters.add(parent);
                 }

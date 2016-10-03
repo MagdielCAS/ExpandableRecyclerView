@@ -85,52 +85,68 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void childAdd(DataSnapshot dataSnapshot) {
-        item = dataSnapshot.getValue(ContentItem.class);
+        //item = dataSnapshot.getValue(ContentItem.class);
+        item = new ContentItem();
+        StickyHeader h = new StickyHeader();
+        for(DataSnapshot data: dataSnapshot.getChildren()) {
+            switch (data.getKey()){
+                case "definicao":
+                    item.setDefinicao(data.getValue(String.class));
+                    h = new StickyHeader("Definição");
+                    h.setSectionFirstPosition(0);
+                    dataSet.add(h);
+                    dataSet.add(item.getDefinicao());
+                    break;
+                case "informacoesGerais":
+                    item.setInformacoesGerais(data.getValue(String.class));
+                    h = new StickyHeader("Informações Gerais");
+                    h.setSectionFirstPosition(dataSet.size());
+                    dataSet.add(h);
+                    dataSet.add(item.getInformacoesGerais());
+                    System.out.println(item.getInformacoesGerais());
+                    break;
+                case "legislacao":
+                    item.setLegislacao(data.getValue(String.class));
+                    h = new StickyHeader("Legislação");
+                    h.setSectionFirstPosition(dataSet.size());
+                    dataSet.add(h);
+                    dataSet.add(item.getLegislacao());
+                    System.out.println("lg");
+                    break;
+                case "requisitosBasicos":
+                    item.setRequisitosBasicos(data.getValue(String.class));
+                    h = new StickyHeader("Requisitos Básicos");
+                    h.setSectionFirstPosition(dataSet.size());
+                    dataSet.add(h);
+                    dataSet.add(item.getRequisitosBasicos());
+                    break;
+                case "title":
+                    item.setTitle(data.getValue(String.class));
+                    break;
+                case "procedimentosTramites":
+                    List<ContentItem.Procedimento> procedimentos = new ArrayList<>();
+                    for(DataSnapshot d:data.getChildren()){
+                        procedimentos.add(d.getValue(ContentItem.Procedimento.class));
+                    }
+                    item.setProcedimentosTramites(procedimentos);
+                    h = new StickyHeader("Procedimentos e Tramites");
+                    h.setSectionFirstPosition(dataSet.size());
+                    dataSet.add(h);
+                    for(ContentItem.Procedimento i:
+                            item.getProcedimentosTramites()) {
+                        dataSet.add("Passo " + i.getPasso());
+                        dataSet.add(i.getProcedimentos());
+                        dataSet.add("Responsável: "+i.getResponsavel());
+                        System.out.println("pt add");
+                    }
+                    break;
+            }
+        }
+
         String teste = "";
         CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbarLayout.setTitle(item.getTitle());
-        if(item.getDefinicao() != null){
-            StickyHeader h = new StickyHeader("Definição");
-            h.setSectionFirstPosition(0);
-            dataSet.add(h);
-            dataSet.add(item.getDefinicao());
-            System.out.println("d");
-        }
-        if(item.getInformacoesGerais() != null){
-            StickyHeader h = new StickyHeader("Informações Gerais");
-            h.setSectionFirstPosition(dataSet.size());
-            dataSet.add(h);
-            dataSet.add(item.getInformacoesGerais());
-            System.out.println(item.getInformacoesGerais());
-            System.out.println("ig");
-        }
-        if(item.getRequisitosBasicos() != null){
-            StickyHeader h = new StickyHeader("Requisitos Básicos");
-            h.setSectionFirstPosition(dataSet.size());
-            dataSet.add(h);
-            dataSet.add(item.getRequisitosBasicos());
-            System.out.println("rqb");
-        }
-        if(item.getLegislacao() != null){
-            StickyHeader h = new StickyHeader("Legislação");
-            h.setSectionFirstPosition(dataSet.size());
-            dataSet.add(h);
-            dataSet.add(item.getLegislacao());
-            System.out.println("lg");
-        }
-        if(item.getProcedimentosTramites() != null){
-            StickyHeader h = new StickyHeader("Procedimentos e Tramites");
-            h.setSectionFirstPosition(dataSet.size());
-            dataSet.add(h);
-            for(ContentItem.Procedimento i:
-                    item.getProcedimentosTramites()) {
-                dataSet.add("Passo " + i.getPasso());
-                dataSet.add(i.getProcedimentos());
-                dataSet.add("Responsável: "+i.getResponsavel());
-                System.out.println("pt add");
-            }
-        }
-        System.out.println(dataSet.size()+" size");
+
         teste += "<h3>"+item.getTitle() + "</h3><br><br>";
         for(Object o : dataSet){
             if(o instanceof StickyHeader){

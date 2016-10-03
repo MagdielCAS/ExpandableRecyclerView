@@ -26,7 +26,6 @@ public class ListAdapter extends ExpandableRecyclerAdapter<ListAdapter.HeaderVie
     public ListAdapter(Context context, List<ParentObject> parentItemList) {
         super(context, parentItemList);
         mInflater = LayoutInflater.from(context);
-        intent = new Intent(context,DetailActivity.class);
     }
 
 
@@ -46,17 +45,18 @@ public class ListAdapter extends ExpandableRecyclerAdapter<ListAdapter.HeaderVie
     public void onBindParentViewHolder(HeaderViewHolder headerViewHolder, int i, Object o) {
         HeaderParent parent = (HeaderParent) o;
         headerViewHolder.titulo.setText(parent.getTitle());
-        intent.putExtra("content",parent.getKey());
     }
 
     @Override
     public void onBindChildViewHolder(BodyViewHolder bodyViewHolder, int i, Object o) {
-        BodyContent child = (BodyContent) o;
+        final BodyContent child = (BodyContent) o;
         String content = child.getContent();
         bodyViewHolder.content.setText(content);
         bodyViewHolder.lerMais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                intent = new Intent(v.getContext(),DetailActivity.class);
+                intent.putExtra("content",child.getKey());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 v.getContext().startActivity(intent);
             }

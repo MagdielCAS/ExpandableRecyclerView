@@ -13,7 +13,7 @@ public class HeaderParent implements ParentObject {
 
     private UUID mId;
     private String mTitle;
-    private String key;
+
     private List<Object> mChildItemList;
 
     public HeaderParent() {
@@ -47,11 +47,4 @@ public class HeaderParent implements ParentObject {
         mChildItemList = list;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 }
