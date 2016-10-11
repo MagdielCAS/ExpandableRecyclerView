@@ -1,7 +1,10 @@
 package lander.expandable;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -111,9 +116,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+        MenuItem searchMenuItem = menu.findItem(R.id.search);
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem,new MenuItemCompat.OnActionExpandListener() {
 
-        SearchView mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        mSearchView.setQueryHint("teste");
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // Do whatever you need
+                Toast.makeText(getApplicationContext(),"Digite acima os termos de sua busca!", Toast.LENGTH_SHORT).show();
+
+                return true; // KEEP IT TO TRUE OR IT DOESN'T OPEN !!
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                // Do whatever you need
+                Toast.makeText(getApplicationContext(),"teste", Toast.LENGTH_SHORT).show();
+                adapter = new ListAdapter(getApplicationContext(), chapters);
+                recyclerView.setAdapter(adapter);
+                return true; // OR FALSE IF YOU DIDN'T WANT IT TO CLOSE!
+            }
+        });
+
+        SearchView mSearchView = (SearchView) searchMenuItem.getActionView();
+        mSearchView.setQueryHint("Digite termos do conteudo");
+        mSearchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!((SearchView)v).isIconified()){
+
+                }
+            }
+        });
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -164,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     List<Object> child = new ArrayList<>();
                     child.add(new BodyContent(description,contentKey));
                     parent.setChildObjectList(child);
-                    chapters.add(parent);
+                    chapters.add(0,parent);
                 }
         }
 
