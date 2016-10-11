@@ -6,6 +6,7 @@ import java.util.List;
  * Created by magdi on 02/10/2016.
  */
 public class ContentItem {
+    private String key;
     private String definicao;
     private String informacoesGerais;
     private String legislacao;
@@ -77,6 +78,14 @@ public class ContentItem {
 
     public void setProcedimentosTramites(List<Procedimento> procedimentosTramites) {
         this.procedimentosTramites = procedimentosTramites;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public static class Procedimento{

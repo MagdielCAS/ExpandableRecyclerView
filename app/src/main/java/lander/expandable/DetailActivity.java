@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
     private void childAdd(DataSnapshot dataSnapshot) {
         //item = dataSnapshot.getValue(ContentItem.class);
         item = new ContentItem();
-        StickyHeader h = new StickyHeader();
+        StickyHeader h;
         for(DataSnapshot data: dataSnapshot.getChildren()) {
             switch (data.getKey()){
                 case "definicao":

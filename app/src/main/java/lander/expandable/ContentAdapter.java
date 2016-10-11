@@ -11,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.tonicartos.superslim.GridSLM;
-import com.tonicartos.superslim.LinearSLM;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,9 +60,6 @@ public class ContentAdapter extends RecyclerView.Adapter{
         }else {
             StickyHeader item = (StickyHeader) dataSet.get(position);
             ((HeaderViewHolder)holder).textView.setText(item.getHeader());
-         //   final GridSLM.LayoutParams lp = GridSLM.LayoutParams.from(holder.itemView.getLayoutParams());
-          //  lp.setFirstPosition(item.getSectionFirstPosition());
-          //  holder.itemView.setLayoutParams(lp);
         }
     }
 
